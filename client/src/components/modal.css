@@ -1,0 +1,104 @@
+.modal__container{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.8);
+    display:grid;
+    place-items:center;
+    transition: 0.5s ease-in-out;
+    z-index:100;
+    align-items:center;
+}
+.modal__card{
+    width:50vw;
+    background:#fff;
+    height:85vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-y:scroll;
+    border-radius:10px;
+    gap:1rem;
+    
+}
+.modal__card::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+
+  .modal__card::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(179, 179, 179); 
+    border-radius: 10px;
+  }
+   
+
+  .modal__card::-webkit-scrollbar-thumb {
+    background: rgb(177, 177, 177); 
+    border-radius: 50%;
+    
+  }
+  
+
+  .modal__card::-webkit-scrollbar-thumb:hover {
+    background: silver; 
+  }
+
+.modal__card__top{
+    width:100%;
+    
+}
+.modal__card__bottom {
+    margin:1rem;
+ 
+}
+.modal__card__bottom h4{
+    font-size:2.5rem;
+    margin-bottom:1rem;
+}
+.modal__card__bottom p{
+    font-size:1rem;
+    line-height:1.4;
+}
+.modal__card__bottom p:nth-child(2){
+    font-weight:bold;
+    margin-bottom:10px;
+}
+.modal__card__footer{
+    display:flex;
+    gap:1rem;
+    align-items:center;
+    margin-top:1.5rem;
+}
+.modal__image{
+   height:25rem;
+   width:100%;
+ 
+}
+.meals__card__bottom h5 {
+  font-size: 1.5rem;
+}
+@media only screen and (max-width: 1200px){
+    .modal__card{
+        width:70vw;
+    }
+}
+@media only screen and (max-width: 800px){
+    .modal__card{
+        width:90vw;
+    }
+}
+@media only screen and (max-width: 500px){
+    .modal__card{
+        width:98vw;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .modal__card__bottom p{
+        font-size:0.9rem;
+    }
+    .modal__card::-webkit-scrollbar {
+        display: none;
+      }
+}
