@@ -10,12 +10,8 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 const cors = require('cors');
-const corsOptions ={
-    origin:'https://ebike-eight.vercel.app/', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -24,7 +20,11 @@ mongoose
     console.log(err);
   });
 
-
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
