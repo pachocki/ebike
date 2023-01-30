@@ -3,6 +3,7 @@ import HeroSubPages from "../components/HeroSubPages";
 import ShopingCards from "../components/ShopingCards";
 import ScrollTop from "../components/ScrollTop";
 import { useGlobalContext } from "../context/context";
+import Loader from "../components/Loader";
 
 const Shop = (props) => {
   const { products } = useGlobalContext();
@@ -17,20 +18,26 @@ const Shop = (props) => {
         A bike style for everyone
       </h1>
       <div className="flex flex-col pt-20 px-2 screen:px-1 screen:pt-10 tablet:px-0 ">
-        {products.map((product) => (
-          <ShopingCards
-            key={product._id}
-            image={product.img}
-            category={product.categories}
-            model={product.title}
-            stars={product.stars}
-            reviews={product.reviews}
-            price={product.price + " Nok"}
-            save={`${product.price + 2500} `}
-            desc={product.desc}
-            link={`/shop/${product._id}`}
-          />
-        ))}
+        {products.length ? (
+          products.map((product) => (
+            <ShopingCards
+              key={product._id}
+              image={product.img}
+              category={product.categories}
+              model={product.title}
+              stars={product.stars}
+              reviews={product.reviews}
+              price={product.price + " Nok"}
+              save={`${product.price + 2500} `}
+              desc={product.desc}
+              link={`/shop/${product._id}`}
+            />
+          ))
+        ) : (
+          <div className="text-center py-20">
+            <Loader />
+          </div>
+        )}
       </div>
       <ScrollTop />
     </div>
