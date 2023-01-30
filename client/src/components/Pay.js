@@ -31,7 +31,7 @@ const Pay = () => {
     const makeRequest = async () => {
             try {
               const response = await axios({
-                url: 'http://localhost:5000/payment',
+                url: 'https://ebike.onrender.com/payment',
                 method: 'post',
                 data: {
                   amount:1000,
@@ -54,7 +54,7 @@ const Pay = () => {
     <div>
       <StripeCheckout
         name="E-bike"
-        stripeKey = "pk_test_51LysaEGITaNFIpTDcgnxAje6xIPs90IPi7ZEmFyHxwNZ7a2ByUd7fZdegXYnrXz8BA4mZIvgxvmK9yonpnTrlqoY00Pg4RHKeQ" 
+        stripeKey = {process.env.REACT_APP_STRIPE_KEY }
         billingAddress
         shippingAddress
         description="your total is $100"
