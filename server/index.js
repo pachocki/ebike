@@ -11,7 +11,7 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 const cors = require('cors');
 const corsOptions ={
-    origin:'https://ebike.onrender.com', 
+    origin:'https://ebike-eight.vercel.app/', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
