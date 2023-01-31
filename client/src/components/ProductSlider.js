@@ -4,7 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Card from "../components/Card";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "../App.css";
+
 import { Navigation } from "swiper";
 import { useGlobalContext } from "../context/context";
 import Loader from "./Loader";
@@ -22,9 +24,6 @@ const ProductSlider = () => {
             loopFillGroupWithBlank={true}
             grabCursor={true}
             navigation={true}
-            pagination={{
-              clickable: true,
-            }}
             breakpoints={{
               640: {
                 slidesPerView: 1,
