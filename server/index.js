@@ -13,14 +13,23 @@ const cors = require("cors");
 
 app.use(express.json());
 
+// Define allowed origins for the API
+const allowedOrigins = ["https://ebike-eight.vercel.app"];
+
+// Enable CORS with options
 app.use(
   cors({
-    origin: ["https://ebike-eight.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      // Check if origin is in allowedOrigins array
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
-
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connection Successfull!"))
