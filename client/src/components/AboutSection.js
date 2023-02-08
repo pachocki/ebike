@@ -12,7 +12,7 @@ import Image9 from "../assets/flower.png";
 
 
 const About = () => {
-  const [image, setImage] = useState(require("../assets/women-bike.jpg"));
+  const [image, setImage] = useState(require("../assets/women-bike.webp"));
   function handleMouseEnter(imagePath) {
     return () => {
       setImage(imagePath);
@@ -77,7 +77,7 @@ const About = () => {
             <p
               className="text-gray-300 dark:hover:text-orange-600 hover:text-cyan-500 font-bold pl-60 opacity-80 w-max cursor-pointer "
               onMouseEnter={handleMouseEnter(
-                require("../assets/women-bike.jpg")
+                require("../assets/women-bike.webp")
               )}
             >
               e-bike
@@ -95,7 +95,7 @@ const About = () => {
             <p
               className=" text-gray-300 dark:hover:text-orange-600 font-bold pl-60 opacity-80  hover:text-cyan-500 w-max cursor-pointer "
               onMouseEnter={handleMouseEnter(
-                require("../assets/hero-black1.jpg")
+                require("../assets/hero-black1.webp")
               )}
             >
               mountain bike

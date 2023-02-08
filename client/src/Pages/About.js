@@ -1,9 +1,9 @@
 import React from "react";
 import HeroSubPages from "../components/HeroSubPages";
-import Image from "../assets/about-travel5.jpg";
-import Image1 from "../assets/about-team2.jpg";
+import Image from "../assets/about-travel5.webp";
+import Image1 from "../assets/about-team2.webp";
 import Image2 from "../assets/about-travel3.jpg";
-import Image3 from "../assets/about-team.jpg";
+import Image3 from "../assets/about-team.webp";
 import ScrollTop from "../components/ScrollTop"
 
 const About = () => {

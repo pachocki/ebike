@@ -22,7 +22,7 @@ const MissionSection = () => {
           alt="couple on bike"
         />
         <img
-          className="big-screen:z-20 mobile:z-0 absolute w-[50%] top-20  shadow-xl laptop:w-2/5 h-full screen:object-cover screen:w-[400px] tablet:w-[40%] tablet:h-[90vh] mobile:w-2/3 right-1 dark:small-mobile:w-full mobile:right-0 small-mobile:h-[100vh]"
+          className="big-screen:z-20 mobile:z-0 absolute w-[50%] top-20 object-cover shadow-xl laptop:w-2/5 h-full screen:object-cover screen:w-[400px] tablet:w-[40%] tablet:h-[90vh] mobile:w-2/3 right-1 dark:small-mobile:w-full mobile:right-0 small-mobile:h-[100vh]"
           src={Image3}
           alt="mtb biker"
         />
