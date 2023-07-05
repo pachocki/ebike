@@ -24,7 +24,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center bg-black/80 backdrop-blur-xl fixed z-50 inset-0 overflow-hidden">
       <div onClick={openModal} />
-      <div className="flex flex-col items-center min-h-screen pt-40">
+      <div className="flex flex-col items-center min-h-screen justify-center">
         <div
           className="w-full px-6 py-4 mt-6 overflow-hidden z-60 relative top-20 bg-white shadow-md sm:max-w-md sm:rounded-lg "
           ref={ref}
