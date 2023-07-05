@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <div className="dark:bg-zinc-900 relative  flex flex-col w-screen h-full tablet:dark:bg-image-one tablet:bg-[center_top_5rem] tablet:bg-image-two tablet:bg-cover  tablet:bg-black/80 tablet:overlay-bg">
       <div className="flex w-screen h-screen items-center justify-between  ">
-        <div className="big-screen:w-1/3 flex flex-col laptop:w-1/2 h-full  pt-20  leading-none tablet:w-full z-20">
+        <div className="big-screen:w-1/3 flex flex-col z-20 laptop:w-1/2 h-full  pt-20  leading-none tablet:w-full tablet:justify-center ">
           <h1 className="big-screen:px-5 big-screen:pt-20 big-screen:text-[8rem] laptop:text-[7rem] tablet:text-[7.5rem] mobile:text-[6rem] pb-10 tablet:w-full tablet:text-white  mobile:pt-8 mobile:text-center mobile:opacity-80 small-mobile:text-7xl">
             Discover
             <br /> New Quality
