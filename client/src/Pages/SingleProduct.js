@@ -1,58 +1,49 @@
-import React , {useState,useEffect} from "react";
-import {Link} from "react-router-dom"
-import Image from "../assets/bike-box-gray.png";
-import Image1 from "../assets/bike-box-black.png";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
-import ScrollTop from "../components/ScrollTop"
+import ScrollTop from "../components/ScrollTop";
 import { publicRequest } from "../Hooks/requestMethods";
-import {useLocation} from "react-router-dom"
-import {addProduct} from "../redux/cartRedux"
-import {useDispatch} from "react-redux"
+import { useLocation } from "react-router-dom";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const SingleProduct = () => {
-  const location = useLocation()
-  const [singleProduct,setSingleProduct] = useState({})
-  const [quantity,setQuantity] = useState(1)
-  const dispatch = useDispatch()
+  const location = useLocation();
+  const [singleProduct, setSingleProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
-  const handleQuantity=(type)=>{
-    if(type==="dec"){
-      quantity >1 && setQuantity(quantity - 1)
-    }else{
-      setQuantity(quantity + 1)
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
     }
-  }
-
+  };
 
   const id = location.pathname.split("/")[2];
 
-  useEffect(()=>{
-    const getProduct = async ()=>{
-      try{
-        const res = await publicRequest.get("/products/find/" + id)
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
         setSingleProduct(res.data);
-      }catch{}
-      
-    }
-    getProduct(singleProduct)
-  },[id])
+      } catch {}
+    };
+    getProduct(singleProduct);
+  }, [id]);
 
-
-  const handleClick = ()=>{
-    dispatch(
-
-      addProduct({...singleProduct,quantity})
-    )
-
-  }
+  const handleClick = () => {
+    dispatch(addProduct({ ...singleProduct, quantity }));
+  };
   return (
     <div className="pt-20 ">
       <div className="flex  tablet:flex-col tablet:items-center border-b-2">
         <div className="w-1/2 tablet:w-full">
           <img
-            className="w-full object-fit object-center border-r-2  dark:border-none big-screen:h-full mobile:h-[50vh] tablet:object-cover "
+            className="w-full object-cover object-center border-r-2  dark:border-none big-screen:h-full mobile:h-full mobile:object-contain "
             src={singleProduct.img}
-            alt="lala"
+            alt="bike"
           />
         </div>
         <div className="w-1/2 tablet:w-full ">
@@ -65,7 +56,7 @@ const SingleProduct = () => {
           <div className=" py-11 screen:py-5">
             <div className="px-10 screen:px-2 tablet:px-10  mobile:px-2">
               <p className="text-2xl opacity-80 laptop:text-xl mobile:text-lg">
-               {singleProduct.desc}
+                {singleProduct.desc}
               </p>
               <p className="pt-1 pb-5 text-2xl opacity-80 laptop:text-xl">
                 The range from a battery charge will vary depending on different
@@ -73,14 +64,22 @@ const SingleProduct = () => {
                 rider and cargo; wind resistance; tire pressure and tire tread.
               </p>
               <div className="flex tablet:justify-center gap-40 mobile:gap-20">
-               <Link to ="/ordersummary"><button className="button button--pan " onClick={handleClick}>
-                  <span className="mobile:text-xl">Buy Now</span>
-                </button></Link> 
+                <Link to="/ordersummary">
+                  <button className="button button--pan " onClick={handleClick}>
+                    <span className="mobile:text-xl">Buy Now</span>
+                  </button>
+                </Link>
                 <div className="flex gap-5 text-4xl">
-                    <AiFillMinusCircle className="cursor-pointer hover:opacity-50" onClick={()=>handleQuantity("dec")}/>
-                    <span>{quantity}</span>
-                    <AiFillPlusCircle className="cursor-pointer hover:opacity-50" onClick={()=>handleQuantity("inc")}/>
-                  </div>
+                  <AiFillMinusCircle
+                    className="cursor-pointer hover:opacity-50"
+                    onClick={() => handleQuantity("dec")}
+                  />
+                  <span>{quantity}</span>
+                  <AiFillPlusCircle
+                    className="cursor-pointer hover:opacity-50"
+                    onClick={() => handleQuantity("inc")}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -177,7 +176,7 @@ const SingleProduct = () => {
           </ul>
         </div>
       </div>
-      <div className="w-full h-[700px] tablet:h-[50vh] bg-fixed bg-cover bg-top flex justify-center items-center bg-image-three">
+      <div className="w-full mb-10 h-[700px] tablet:h-[50vh] bg-fixed bg-cover bg-top flex justify-center items-center bg-image-three">
         <p className="text-8xl font-bold text-white tablet:text-7xl mobile:hidden ">
           Always with smile .
         </p>
@@ -185,28 +184,8 @@ const SingleProduct = () => {
           Always <br /> with <br /> smile.
         </p>
       </div>
-      <div className="py-10 flex flex-col items-center text-white bg-gray-200 dark:bg-zinc-800">
-        <div className="relative flex justify-center">
-          <img className="h-[55vh] dark:hidden" src={Image} alt="delivery" />
-          <img
-            className="h-[55vh] hidden dark:block "
-            src={Image1}
-            alt="delivery"
-          />
-     
-          <div className="absolute bottom-20 left-[6.7rem]   screen:left-[7rem]    mobile:left-[5rem] mobile:bottom-20 small-mobile:left-12">
-            <span className="text-6xl laptop:text-5xl  small-mobile:text-3xl">
-              Delivery
-            </span>
-            <p className="text-2xl w-4/5   mobile:text-xl small-mobile:text-lg">
-              Wherever you are in Europe (with the exception for the United
-              Kingdom), we deliver your bike to your doorstep within 3-10
-              business days. Currently free shipping on all orders above 1000,-
-            </p>
-          </div>
-        </div>
-      </div>
-      <ScrollTop/>
+
+      <ScrollTop />
     </div>
   );
 };

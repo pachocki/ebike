@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HeroSubPages from "../components/HeroSubPages";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../Hooks/requestMethods";
-import { addReset } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { addReset, removeProduct } from "../redux/cartRedux";
 
 const MySwal = withReactContent(Swal);
 
@@ -16,9 +15,11 @@ const OrderSummary = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const quantity = useSelector((state) => state.cart.quantity);
+
   const onToken = (token) => {
     setStripeToken(token);
   };
+
   const handleSuccess = () => {
     MySwal.fire({
       icon: "success",
@@ -29,6 +30,7 @@ const OrderSummary = () => {
       dispatch(addReset(quantity));
     });
   };
+
   const handleFailure = () => {
     MySwal.fire({
       icon: "error",
@@ -36,6 +38,7 @@ const OrderSummary = () => {
       time: 4000,
     });
   };
+
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -52,8 +55,18 @@ const OrderSummary = () => {
         console.log(stripeToken);
       }
     };
-    stripeToken && makeRequest();
+
+    if (stripeToken) {
+      makeRequest();
+    }
   }, [stripeToken]);
+
+  const handleRemove = (productId) => {
+    dispatch(removeProduct(productId));
+    if (cart.products.length === 1) {
+      dispatch(addReset(0));
+    }
+  };
 
   return (
     <div>
@@ -61,10 +74,14 @@ const OrderSummary = () => {
         bg="bg-image-seven big-screen:h-[70vh] mobile:h-[60vh] "
         title="Thank You"
       />
-      <h1 className="text-8xl text-center pt-10 screen:text-7xl mobile:text-6xl small-mobile:text-5xl mobile:pb-10">
+      <h1 className="text-8xl text-center py-10 screen:text-7xl mobile:text-6xl small-mobile:text-5xl mobile:py-5">
         Your Bag
       </h1>
-      <div className="flex justify-between  pb-20 px-10 screen:px-5 w-full items-center gap-5 mobile:pb-10 mobile:px-1">
+      <div
+        className={`flex ${
+          cart.products.length > 0 ? "justify-between" : "justify-center"
+        } pb-20 px-10 screen:px-5 w-full items-center gap-5 mobile:pb-10 mobile:px-1`}
+      >
         <div>
           <Link to="/shop">
             {" "}
@@ -74,56 +91,66 @@ const OrderSummary = () => {
           </Link>
         </div>
 
-        <div>
-          <StripeCheckout
-            name="E-bike"
-            stripeKey="pk_test_51LysaEGITaNFIpTDcgnxAje6xIPs90IPi7ZEmFyHxwNZ7a2ByUd7fZdegXYnrXz8BA4mZIvgxvmK9yonpnTrlqoY00Pg4RHKeQ"
-            billingAddress
-            shippingAddress
-            description={`your total is ${cart.total} NOK`}
-            amount={100}
-            token={onToken}
-          >
-            <button className="bg-black text-white hover:opacity-50 py-4 px-4 dark:border-none text-xl border-2 tablet:text-lg laptop:px-2 laptop:py-2  mobile:text-sm">
-              <p>Pay Now</p>
-            </button>
-          </StripeCheckout>
-        </div>
+        {cart.products.length > 0 ? (
+          <div>
+            <StripeCheckout
+              name="E-bike"
+              stripeKey="pk_test_51LysaEGITaNFIpTDcgnxAje6xIPs90IPi7ZEmFyHxwNZ7a2ByUd7fZdegXYnrXz8BA4mZIvgxvmK9yonpnTrlqoY00Pg4RHKeQ"
+              billingAddress
+              shippingAddress
+              description={`Your total is ${cart.total} NOK`}
+              amount={100}
+              token={onToken}
+            >
+              <button className="bg-black text-white hover:opacity-50 py-4 px-4 dark:border-none text-xl border-2 tablet:text-lg laptop:px-2 laptop:py-2  mobile:text-sm">
+                <p>Pay Now</p>
+              </button>
+            </StripeCheckout>
+          </div>
+        ) : null}
       </div>
       <div className="grid grid-cols-[4fr_1fr] laptop:grid-cols-[3fr_1fr] tablet:flex tablet:flex-col laptop:gap-2 relative gap-10 pb-10">
         <div className="flex flex-col">
-          <div className="pb-10 flex  justify-between tablet:pt-0 flex-col ">
-            {cart.products.map((product) => (
-              <div
-                className="flex justify-between gap-2 items-center w-full tablet:flex-col"
-                key={product._id}
-              >
-                <div className="w-1/2 tablet:w-full">
-                  <img
-                    className="object-cover w-full"
-                    src={product.img}
-                    alt="bike"
-                  />
-                </div>
-                <div className="flex tablet:w-full tablet:justify-center">
-                  <div className="flex flex-col gap-1 text-5xl laptop:text-4xl screen:text-2xl tablet:text-4xl mobile:text-3xl">
-                    <h2>{product.title}</h2>
-                    <span>{product._id}</span>
+          <div className="pb-10 flex justify-between tablet:pt-0 flex-col">
+            {cart.products.length > 0
+              ? cart.products.map((product) => (
+                  <div
+                    className="flex justify-between gap-2 pb-10 items-center w-full tablet:flex-col tablet:pb-5 tablet:px-5 mobile:px-2"
+                    key={product._id}
+                  >
+                    <div className="w-1/2 tablet:w-full relative ">
+                      <button
+                        className="text-white bg-cyan-700 dark:bg-red-600 absolute bottom-2 right-3 px-2 py-1 bg-teal"
+                        onClick={() => handleRemove(product._id)}
+                      >
+                        Remove
+                      </button>
+                      <img
+                        className="object-cover w-full rounded-xl border dark:border-none"
+                        src={product.img}
+                        alt="bike"
+                      />
+                    </div>
+                    <div className="flex tablet:w-full tablet:justify-center">
+                      <div className="flex flex-col gap-1 text-5xl laptop:text-4xl screen:text-2xl tablet:text-4xl mobile:text-3xl">
+                        <h2>{product.title}</h2>
+                        <span>{product._id}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 flex-col text-4xl laptop:text-3xl tablet:gap-2 tablet:text-4xl mobile:text-3xl">
+                      <div className="flex gap-5 screen:gap-2 text-3xl ">
+                        <span>Quantity</span>
+                        <span>{product.quantity}</span>
+                      </div>
+                      <div>
+                        <span className="tablet:text-3xl text-green-500">
+                          {product.price} NOK
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 flex-col text-4xl laptop:text-3xl tablet:gap-2 tablet:text-4xl mobile:text-3xl">
-                  <div className="flex gap-5 screen:gap-2 screen:text-xl">
-                    <span>{product.quantity}</span>
-                  </div>
-
-                  <div>
-                    <span className="tablet:text-3xl text-green-500">
-                      {product.price} NOK
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))
+              : null}
           </div>
         </div>
 

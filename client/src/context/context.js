@@ -32,13 +32,7 @@ const ModalProvider = ({ children }) => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get("https://ebike.onrender.com/api/products", {
-          headers: {
-            "Access-Control-Allow-Origin": "https://ebike-eight.vercel.app",
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
+        const res = await axios.get("https://ebike.onrender.com/api/products");
         setProducts(res.data);
       } catch (err) {
         console.log(err);

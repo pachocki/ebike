@@ -22,7 +22,7 @@ const Hero = () => {
             </h2>
           </div>
 
-          <div className="flex justify-center relative  items-center w-full tablet:fill-white dark:fill-white ">
+          <div className="flex justify-center relative  items-center w-full tablet:fill-white dark:fill-white tablet:hidden">
             <div className="mobile:pt-2">
               <ReactCurvedText
                 width={510}
