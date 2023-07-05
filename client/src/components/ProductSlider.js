@@ -14,7 +14,7 @@ import Loader from "./Loader";
 const ProductSlider = () => {
   const { products } = useGlobalContext();
   return (
-    <div className="relative bg-gray-200 pt-40 pb-20 tablet:pb-0 dark:bg-zinc-800 dark:text-black ">
+    <div className="relative bg-gray-200 pt-40 pb-20 tablet:pt-20 tablet:pb-0 dark:bg-zinc-800 dark:text-black ">
       <div className="pt-20 mobile:py-0">
         {products.length ? (
           <Swiper
